@@ -10,9 +10,9 @@ fn main() {
     println!("{}", 1000 % 256);
     // since Rust 1.45, the `as` keyword performs a *saturating cast* -
     // when casting from float to int.
-    println!("{}", 300.0_f32 as u8);  // 255.
-    println!("-100.0 as u8 is {}", -100.0_f32 as u8);  // 0.
-    println!("{}", f32::NAN as u8);  // 0.
+    println!("{}", 300.0_f32 as u8); // 255.
+    println!("-100.0 as u8 is {}", -100.0_f32 as u8); // 0.
+    println!("{}", f32::NAN as u8); // 0.
     unsafe {
         // rounds toward zero and converts to any primitive integer type, -
         // assuming that the value is finite and fits in that type.
@@ -26,8 +26,8 @@ fn main() {
     let x = 1u8;
     let y = 2u32;
     let z = 3f32;
-    let i = 1;  // i32.
-    let f = 1.0;  // f64.
+    let i = 1; // i32.
+    let f = 1.0; // f64.
     println!("{}", std::mem::size_of_val(&x));
     println!("{}", std::mem::size_of_val(&y));
     println!("{}", std::mem::size_of_val(&z));

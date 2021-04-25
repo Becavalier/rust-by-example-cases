@@ -8,7 +8,7 @@ fn main() {
     inferred_type = 4294967296i64;
     let mut mutable = 12;
     mutable = 21;
-    let mutable = true;  // overwritten with shadowing.
+    let mutable = true; // overwritten with shadowing.
 
     /* Literals and Operators */
     println!("{}", 1_000);

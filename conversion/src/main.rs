@@ -1,4 +1,3 @@
-
 // used for fallible conversions.
 use std::convert::{TryFrom, TryInto};
 #[derive(Debug, PartialEq)]
@@ -31,13 +30,13 @@ fn main() -> Result<(), <EvenNumber as TryFrom<i32>>::Error> {
 
     /* Into */
     let int = 5;
-    let num: Number = int.into();  // will call Number::from implicitly.
+    let num: Number = int.into(); // will call Number::from implicitly.
     println!("{:?}", num);
 
     /* TryFrom and TryInto */
     let x = EvenNumber::try_from(10)?;
     println!("x = {:?}", x);
-    
+
     assert_eq!(EvenNumber::try_from(8), Ok(EvenNumber(8)));
     assert_eq!(EvenNumber::try_from(1), Err(()));
     let result: Result<EvenNumber, ()> = 8i32.try_into();
@@ -54,7 +53,7 @@ fn main() -> Result<(), <EvenNumber as TryFrom<i32>>::Error> {
         }
     }
     let circle = Circle { radius: 6 };
-    println!("{}", circle.to_string());  // struct instance to String.
+    println!("{}", circle.to_string()); // struct instance to String.
 
     // String to the numeric value (based on the "FromStr" trait).
     let parsed: i32 = "5".parse().unwrap();

@@ -66,9 +66,7 @@ mod my {
     impl<T> ClosedBox<T> {
         // a public constructor method.
         pub fn new(contents: T) -> ClosedBox<T> {
-            ClosedBox {
-                contents: contents,
-            }
+            ClosedBox { contents: contents }
         }
     }
     fn function() {}
@@ -78,7 +76,7 @@ mod my {
         }
     }
     pub fn indirect_call() {
-        self::function();  // the function with this mod.
+        self::function(); // the function with this mod.
         function();
         self::cool::function();
         super::function();

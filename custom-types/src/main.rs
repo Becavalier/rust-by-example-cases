@@ -1,8 +1,10 @@
 enum Status {
-    Rich, Poor
+    Rich,
+    Poor,
 }
 enum Work {
-    Civilian, Soldier,
+    Civilian,
+    Soldier,
 }
 
 fn main() {
@@ -22,22 +24,25 @@ fn main() {
         top_left: Point,
         bottom_left: Point,
     }
-    let p = Person { name: String::from("Jason"), age: 19, };
+    let p = Person {
+        name: String::from("Jason"),
+        age: 19,
+    };
     println!("{:#?}", p);
 
     // make a new Person by using struct update syntax to use the fields of the other one.
     let another_p = Person {
         name: String::from("Alice"),
-        ..p  
+        ..p
     };
     println!("{:#?}", another_p);
-    
+
     // destructure a struct.
     let Person { name, age } = p;
     println!("{} {}", name, age);
 
     // unit and tuple struct.
-    let _unit = Unit;  // ZST.
+    let _unit = Unit; // ZST.
     let pair = Pair(1, 1.1);
     println!("{}, {}", pair.0, pair.1);
     let Pair(integer, decimal) = pair;
@@ -60,7 +65,7 @@ fn main() {
             WebEvent::Click { x, y } => println!("clicked at x={}, y={}.", x, y),
         }
     }
-    inspect(WebEvent::Click { x: 1, y: 2, });
+    inspect(WebEvent::Click { x: 1, y: 2 });
 
     /* Type Aliases */
     #[derive(Debug)]
@@ -86,10 +91,12 @@ fn main() {
         Poor => println!("The rich have lots of money!"),
         _ => (),
     }
-    
+
     /* C-like Enum */
     enum Number {
-        Zero, One, Two,
+        Zero,
+        One,
+        Two,
     }
     enum Color {
         Red = 0xff0000,
@@ -110,12 +117,12 @@ fn main() {
             Nil
         }
         fn prepend(self, elem: u32) -> List {
-            Cons(elem, Box::new(self))  // move to heap.
+            Cons(elem, Box::new(self)) // move to heap.
         }
         // with the help of RFC 2005-match-ergonomics.
         fn len(&self) -> u32 {
             match self {
-                Cons(_, tail) => 1 + tail.len(),  // recursive.
+                Cons(_, tail) => 1 + tail.len(), // recursive.
                 Nil => 0,
             }
         }
@@ -133,9 +140,10 @@ fn main() {
         // }
         fn stringify(&self) -> String {
             match self {
-                Cons(head, tail) => {  // take a reference of tail.
+                Cons(head, tail) => {
+                    // take a reference of tail.
                     format!("{}, {}", head, tail.stringify())
-                },
+                }
                 Nil => {
                     format!("Nil")
                 }
@@ -157,4 +165,3 @@ fn main() {
         println!("{}", LANGUAGE);
     }
 }
-

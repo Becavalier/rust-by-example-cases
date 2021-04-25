@@ -30,12 +30,14 @@ trait PrintInOption {
     fn print_in_option(self);
 }
 
-impl<T> PrintInOption for T where
-    Option<T>: std::fmt::Debug {
-        fn print_in_option(self) {
-            println!("{:?}", Some(self));
-        }
+impl<T> PrintInOption for T
+where
+    Option<T>: std::fmt::Debug,
+{
+    fn print_in_option(self) {
+        println!("{:?}", Some(self));
     }
+}
 /* New Type Idiom */
 struct Years(i64);
 struct Days(i64);
@@ -67,10 +69,14 @@ impl Contains for Container {
         (&self.0 == number_1) && (&self.1 == number_2)
     }
     // Grab the first number.
-    fn first(&self) -> i32 { self.0 }
+    fn first(&self) -> i32 {
+        self.0
+    }
 
     // Grab the last number.
-    fn last(&self) -> i32 { self.1 }
+    fn last(&self) -> i32 {
+        self.1
+    }
 }
 fn difference<C: Contains>(container: &C) -> i32 {
     container.last() - container.first()
@@ -79,7 +85,10 @@ use std::marker::PhantomData;
 #[derive(PartialEq)]
 struct PhantomTuple<A, B>(A, PhantomData<B>);
 #[derive(PartialEq)]
-struct PhantomStruct<A, B> { first: A, phantom: PhantomData<B> }
+struct PhantomStruct<A, B> {
+    first: A,
+    phantom: PhantomData<B>,
+}
 
 pub trait Add<RHS = Self> {
     type Output;
@@ -135,12 +144,15 @@ fn main() {
 
     let container = Container(number_1, number_2);
 
-    println!("Does container contain {} and {}: {}",
-        &number_1, &number_2,
-        container.contains(&number_1, &number_2));
+    println!(
+        "Does container contain {} and {}: {}",
+        &number_1,
+        &number_2,
+        container.contains(&number_1, &number_2)
+    );
     println!("First number: {}", container.first());
     println!("Last number: {}", container.last());
-    
+
     println!("The difference is: {}", difference(&container));
 
     let _tuple1: PhantomTuple<char, f32> = PhantomTuple('Q', PhantomData);
@@ -156,7 +168,7 @@ fn main() {
     // compile-time Error! Type mismatch so these cannot be compared:
     // println!("_tuple1 == _tuple2 yields: {}", _tuple1 == _tuple2);
 
-    let one_foot:  Length<Inch> = Length(12.0, PhantomData);
+    let one_foot: Length<Inch> = Length(12.0, PhantomData);
     let one_meter: Length<Mm> = Length(1000.0, PhantomData);
     let two_feet = one_foot + one_foot;
     let two_meters = one_meter + one_meter;

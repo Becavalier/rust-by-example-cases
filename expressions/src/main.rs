@@ -1,7 +1,7 @@
 fn main() {
     let x = 5;
-    x;  // no effect.
-    let y = { 1 };  // block with return value.
+    x; // no effect.
+    let y = { 1 }; // block with return value.
     println!("{}", y);
 
     /* if/else */
@@ -32,7 +32,7 @@ fn main() {
         println!("Entered the outer loop");
         'inner: loop {
             println!("Entered the inner loop");
-            break 'outer;  // break the outer loop.
+            break 'outer; // break the outer loop.
         }
         println!("This point will never be reached");
     }
@@ -43,7 +43,7 @@ fn main() {
     let mut result = loop {
         counter += 1;
         if counter == 10 {
-            break counter * 2;  // break with return value.
+            break counter * 2; // break with return value.
         }
     };
     assert_eq!(result, 20);
@@ -56,33 +56,37 @@ fn main() {
 
     /* for loops */
     // can be used to iterate through an Iterator.
-    for x in 1..5 {  // [1, 5).
+    for x in 1..5 {
+        // [1, 5).
         println!("x = {}", x);
     }
-    for x in 1..=5 {  // [1, 5].
+    for x in 1..=5 {
+        // [1, 5].
         println!("x = {}", x);
     }
 
     /* for and iterators */
     #[derive(Debug)]
     let mut names = vec!["Bob", "Frank", "Ferris"];
-    for name in names.iter() {  /// immutable reference. 
+    for name in names.iter() {
+        /// immutable reference.
         match *name {
             "Bob" => {
                 println!("This is Bob!");
-            },
+            }
             _ => (),
         }
     }
     for name in names.iter_mut() {
         match name {
             name @ &mut "Bob" => {
-               *name = "Handsome Bob"; 
-            },
+                *name = "Handsome Bob";
+            }
             _ => (),
         }
     }
-    for name in names.into_iter() {  // move with ownership.
+    for name in names.into_iter() {
+        // move with ownership.
         println!("{}", &name);
     }
     // println!("{:?}", names);  // panic!
@@ -119,8 +123,8 @@ fn main() {
     }
     let color = Color::RGB(1, 2, 4);
     match color {
-        Color::Red   => println!("The color is Red!"),
-        Color::Blue  => println!("The color is Blue!"),
+        Color::Red => println!("The color is Red!"),
+        Color::Blue => println!("The color is Blue!"),
         Color::Green => println!("The color is Green!"),
         Color::RGB(ref r, g, b) => println!("Red: {}, green: {}, and blue: {}!", r, g, b),
     }
@@ -134,33 +138,41 @@ fn main() {
         val => println!("Got a value via dereferencing: {:?}", val),
     }
     let _not_a_reference = 3;
-    let ref _is_a_reference = 3;  // create a reference (same as "&").
+    let ref _is_a_reference = 3; // create a reference (same as "&").
     let value = 5;
     let mut mut_value = 6;
     match value {
-        ref r => println!("Got a reference to a value: {:?}", r), 
+        ref r => println!("Got a reference to a value: {:?}", r),
     }
     match mut_value {
         ref mut m => {
             *m += 10;
             println!("We added 10. `mut_value`: {:?}", m);
-        },
+        }
     }
- 
+
     /* destructure structs */
     struct Foo {
         x: (u32, u32),
         y: u32,
         z: u32,
     }
-    let foo = Foo { x: (1, 2), y: 3, z: 5 };
+    let foo = Foo {
+        x: (1, 2),
+        y: 3,
+        z: 5,
+    };
     match foo {
-        Foo { x: (x1, y1), y, z: 4 } => {
+        Foo {
+            x: (x1, y1),
+            y,
+            z: 4,
+        } => {
             println!("{} {} {}", x1, y1, y);
-        },
+        }
         Foo { y, .. } => {
             println!("{}", y);
-        },
+        }
     }
 
     /* Guards */
@@ -177,8 +189,8 @@ fn main() {
     }
     match age() {
         0 => println!("I haven't celebrated my first birthday yet"),
-        n @ 1 ..= 12 => println!("I'm a child of age {:?}", n),
-        n @ 13 ..= 19 => println!("I'm a teen of age {:?}", n),
+        n @ 1..=12 => println!("I'm a child of age {:?}", n),
+        n @ 13..=19 => println!("I'm a teen of age {:?}", n),
         n => println!("I'm an old person of age {:?}", n),
     }
     fn some_number() -> Option<u32> {
@@ -231,8 +243,10 @@ fn main() {
     if let EnumFoo::Qux(ref value @ 100) = c {
         println!("c is one hundred");
     }
-    
-    enum BarFoo { Bar }
+
+    enum BarFoo {
+        Bar,
+    }
     let a = BarFoo::Bar;
     if let BarFoo::Bar = a {
         println!("a is foobar");

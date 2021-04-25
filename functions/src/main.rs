@@ -77,10 +77,16 @@ fn zoo(f: fn()) {
 fn bar(x: i32) -> i32 {
     x
 }
-fn apply<F>(f: F) where F: FnOnce () {
+fn apply<F>(f: F)
+where
+    F: FnOnce(),
+{
     f();
 }
-fn apply_to_3<F>(f: F) -> i32 where F: Fn(i32) -> i32 {
+fn apply_to_3<F>(f: F) -> i32
+where
+    F: Fn(i32) -> i32,
+{
     f(3)
 }
 fn call_me<F: Fn()>(f: F) {
@@ -91,9 +97,7 @@ fn my_function() {
 }
 fn create_fn() -> impl Fn() {
     let text = "Fn".to_owned();
-    move || {
-        println!("This is a: {}", text)
-    }
+    move || println!("This is a: {}", text)
 }
 fn create_fnmut() -> impl FnMut() {
     let mut text = "FnMut".to_owned();
@@ -109,7 +113,7 @@ fn create_fonce() -> impl FnOnce() {
         println!("This is a: {}", text);
     }
 }
-fn print_coordinates(&(x, y): &(i32, i32)) { 
+fn print_coordinates(&(x, y): &(i32, i32)) {
     println!("Current location: ({}, {})", x, y);
 }
 fn is_odd(n: u32) -> bool {
@@ -135,7 +139,9 @@ fn main() {
     pair.destroy();
 
     /* Closures */
-    fn function(i: i32) -> i32 { i + 1 }
+    fn function(i: i32) -> i32 {
+        i + 1
+    }
     let closure_annotated = |i: i32| -> i32 { i + 1 };
     let closure_inferred = |i| i + 1;
     let i = 1;
@@ -145,39 +151,40 @@ fn main() {
     let one = || i;
     println!("closure returning one: {}", one());
     let fp: fn(i32) -> i32 = closure_inferred;
-    println!("{:?}", fp as i32);  // function pointer.
+    println!("{:?}", fp as i32); // function pointer.
     foo(bar);
-    foo(|x| x);  // closure can be passed through another function call.
+    foo(|x| x); // closure can be passed through another function call.
 
     /* Capturing */
     use std::mem;
     let color = String::from("green");
-    let print = || println!("`color`: {}", color);  // &T.
+    let print = || println!("`color`: {}", color); // &T.
     print();
     let _reborrow = &color;
     print();
     let _color_moved = color; // take ownership.
     let mut count = 0;
     let mut inc = || {
-        count += 1;  // &mut T.
+        count += 1; // &mut T.
         println!("`count`: {}", count);
     };
     inc();
     // let _reborrow = &count; // panic!
     inc();
-    let _count_reborrowed = &mut count; 
+    let _count_reborrowed = &mut count;
     // a non-copy type.
     let movable = Box::new(3);
-    let consume = || {  // T.
+    let consume = || {
+        // T.
         println!("`movable`: {:?}", movable);
-        println!("{}", _color_moved);  // &T;
+        println!("{}", _color_moved); // &T;
         mem::drop(movable);
     };
     println!("{}", _color_moved);
     consume();
 
     let haystack = vec![1, 2, 4];
-    let contains = move |needle| haystack.contains(needle);  // T.
+    let contains = move |needle| haystack.contains(needle); // T.
     println!("{}", contains(&1));
     println!("{}", contains(&4));
 
@@ -185,11 +192,11 @@ fn main() {
     let greeting = "hello";
     let mut farewell = "goodbye".to_owned();
     let diary = || {
-        println!("I said {}.", greeting);  // captured by reference.
-        farewell.push_str("!!!");  // mutable reference.
+        println!("I said {}.", greeting); // captured by reference.
+        farewell.push_str("!!!"); // mutable reference.
         println!("Then I screamed {}.", farewell);
         println!("Now I can sleep. zzzzz");
-        mem::drop(farewell);  // captured by value.
+        mem::drop(farewell); // captured by value.
     };
     apply(diary);
     let double = |x| 2 * x;
@@ -203,7 +210,7 @@ fn main() {
     let closure = || println!("I'm a closure!");
     call_me(closure);
     call_me(my_function);
-    println!("{}", my_function as u32);  // take function pointer.
+    println!("{}", my_function as u32); // take function pointer.
 
     /* As output parameters */
     let fn_plain = create_fn();
@@ -217,7 +224,7 @@ fn main() {
     let vec1 = vec![1, 2, 4];
     let vec2 = vec![4, 5, 6];
     println!("2 in vec1: {}", vec1.iter().any(|&x| x == 2));
-    println!("2 in vec2: {}", vec2.into_iter().any(|x| x == 2));  // value wiil be moved.
+    println!("2 in vec2: {}", vec2.into_iter().any(|x| x == 2)); // value wiil be moved.
     let array1 = [1, 2, 3];
     let array2 = [4, 5, 6];
     println!("2 in array1: {}", array1.iter().any(|&x| x == 2));
@@ -237,13 +244,16 @@ fn main() {
     let array3 = [1, 2, 3];
     let array4 = [4, 5, 6];
     println!("Find 2 in array3: {:?}", array3.iter().find(|&&x| x == 2));
-    println!("Find 2 in array4: {:?}", array4.into_iter().find(|&&x| x == 2));
+    println!(
+        "Find 2 in array4: {:?}",
+        array4.into_iter().find(|&&x| x == 2)
+    );
     let index_of_first_even_number = vec3.iter().position(|x| x % 2 == 0);
     if let Some(p) = index_of_first_even_number {
         println!("{}", p);
     }
-    let point = (3, 5); 
-    print_coordinates(&point);  // pattern matching.
+    let point = (3, 5);
+    print_coordinates(&point); // pattern matching.
 
     /* Higher Order Functions */
     let upper = 1000;
@@ -257,11 +267,11 @@ fn main() {
         }
     }
     println!("imperative style: {}", acc);
-    let sum_of_squared_odd_numbers: u32 =
-        (0..).map(|n| n * n)
-            .take_while(|&n_squared| n_squared < upper)
-            .filter(|&n_squared| is_odd(n_squared))
-            .fold(0, |acc, n_squared| acc + n_squared);
+    let sum_of_squared_odd_numbers: u32 = (0..)
+        .map(|n| n * n)
+        .take_while(|&n_squared| n_squared < upper)
+        .filter(|&n_squared| is_odd(n_squared))
+        .fold(0, |acc, n_squared| acc + n_squared);
     println!("functional style: {}", sum_of_squared_odd_numbers);
 
     /* Diverging functions */
@@ -270,11 +280,14 @@ fn main() {
         for i in 0..up_to {
             let addition: u32 = match i % 2 == 1 {
                 true => i,
-                false => continue,  // -> ! can match everything.
+                false => continue, // -> ! can match everything.
             };
             acc += addition;
         }
         acc
     }
-    println!("Sum of odd numbers up to 9 (excluding): {}", sum_odd_numbers(9));
+    println!(
+        "Sum of odd numbers up to 9 (excluding): {}",
+        sum_odd_numbers(9)
+    );
 }
