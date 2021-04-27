@@ -1,3 +1,4 @@
 # rust-by-example-cases
-All the cases are from the online book "Rust By Example". 
-Maybe add other cases in the future.
+The most of the cases are from the online book "Rust By Example". 
+
+Other new cases will be coming in constantly.
