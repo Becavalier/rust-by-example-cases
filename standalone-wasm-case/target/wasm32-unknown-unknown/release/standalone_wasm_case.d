@@ -1,0 +1,1 @@
+/Users/jason/Repo/rust-by-example-cases/standalone-wasm-case/target/wasm32-unknown-unknown/release/standalone_wasm_case.wasm: /Users/jason/Repo/rust-by-example-cases/standalone-wasm-case/src/lib.rs build.rs
