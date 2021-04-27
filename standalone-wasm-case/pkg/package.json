@@ -1,0 +1,12 @@
+{
+  "name": "standalone-wasm-case",
+  "version": "0.1.0",
+  "files": [
+    "standalone_wasm_case_bg.wasm",
+    "standalone_wasm_case.js",
+    "standalone_wasm_case.d.ts"
+  ],
+  "module": "standalone_wasm_case.js",
+  "types": "standalone_wasm_case.d.ts",
+  "sideEffects": false
+}

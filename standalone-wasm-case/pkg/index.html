@@ -1,0 +1,22 @@
+<html>
+  <head>
+      <script type="module" name="mod" src="./mod.js"></script>
+  </head>
+  <body>
+    <script type="module" async>
+      import init from "./standalone_wasm_case.js";
+      (async () => {
+        let module = await init("./standalone_wasm_case_bg.wasm");
+
+        // extract the content of the custom section.
+        const sections = WebAssembly.Module.customSections(init.__wbindgen_wasm_module, "hello");
+        const decoder = new TextDecoder();
+        const text = decoder.decode(sections[0]);
+        console.log(text); // -> "This is a custom section".
+
+        // call exported functions.
+        console.log(module.bar(1, 2));
+      })();
+    </script>
+  </body>
+</html>
