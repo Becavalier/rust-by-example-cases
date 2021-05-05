@@ -1,0 +1,1 @@
+/Users/jason/Repo/rust-by-example-cases/wasm-bindgen-macro/target/wasm32-unknown-unknown/release/wasm_bindgen_macro.wasm: /Users/jason/Repo/rust-by-example-cases/wasm-bindgen-macro/defined-in-js.js /Users/jason/Repo/rust-by-example-cases/wasm-bindgen-macro/src/lib.rs build.rs
